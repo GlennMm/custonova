@@ -1,0 +1,11 @@
+django
+imblearn
+seaborn
+sklearn
+pandas
+numpy
+django-cors-headers
+djangorestframework
+djangorestframework-simplejwt
+djoser
+PyJWT==1.7.1

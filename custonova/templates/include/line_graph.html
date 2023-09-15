@@ -1,0 +1,39 @@
+<div class="" style="width: 75%" >
+    <canvas id='line_graph'></canvas>
+</div>
+
+{% block scripts %}
+    <script>
+        var config = {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        data: [{% for data in chart_info.data %} {{data}},{% endfor %}],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgb(75, 192, 192)',
+                        label: '{{legend_label}}'
+                    }
+                ],
+                labels: [ {% for data in chart_info.labels %} '{{data|date}}',{% endfor %} ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '{{title}}'
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            var canvas = document.getElementById('line_graph').getContext('2d')
+            var line_graph = new Chart(canvas, config);
+        })
+    </script>
+{% endblock %}

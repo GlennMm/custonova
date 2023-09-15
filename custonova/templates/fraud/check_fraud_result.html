@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container' style="padding-top: 2em;padding-bottom: 2em;">
+        <p class="text-heading">{{client.first_name | upper}} {{client.last_name | upper}}</p>
+        <div class="card" style="padding: 1.5em;">
+            {% include 'include/line_graph.html' with chart_info=chart_data x_label='Dates' y_label='Probabilty' title='Probabilty / Fraud Distribution For Client' legend_label='Probability' %}
+        </div>
+        <div style="display: flex;justify-content: space-between;margin-top: 1em;" class="justify-content-between">
+            <a href="{% url 'bank:client_details' pk=client.id %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Back</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn">Uplaod</button>
+    </div>
+
+    <div class="row">
+        <img class="col-6" src="data:image/png;base64,{{elbow}}" style="padding-top: 2em;" />
+        <img class="col-6" src="data:image/png;base64,{{data_visualisation}}" style="padding-top: 2em;" />
+        <img class="col-6" src="data:image/png;base64,{{clustering_diagram}}" style="padding-top: 2em;" />
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container' style="padding-top: 2em;padding-bottom: 2em;">
+        <p class="text-heading">Welcome to the transaction section.</p>
+        <div style="display: flex;margin: 2em 0">
+            <a class="btn genric-btn" href="{% url 'bank:transaction_new' %}">New Transaction</a>
+        </div>
+    </div>
+{% endblock %}

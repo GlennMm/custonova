@@ -1,0 +1,95 @@
+<div
+  class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
+  [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'"
+>
+  <div class="rounded-t mb-0 px-4 py-3 border-0">
+    <div class="flex flex-wrap items-center">
+      <div class="relative w-full px-4 max-w-full flex justify-between">
+        <h3
+          class="font-semibold text-lg"
+          [ngClass]="color === 'light' ? 'text-blueGray-700' : 'text-white'"
+        >
+          {{file?.name || 'Select Dataset' | titlecase }} <span *ngIf="file != null">({{file?.size | filesize}})</span> <a *ngIf="file != null" (click)="clear()" class="px-6 py-4 text-gray-700 cursor-pointer hover:text-gray-300">Clear</a>
+        </h3>
+        <button
+        class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+        type="button"
+        *ngIf="file != null"
+        (click)="uploadDataset()"
+      >
+        Predict
+      </button>
+      <button
+        class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+        type="button"
+        *ngIf="file == null"
+        (click) = "file_picker.click()"
+      >
+        Select Dataset
+        <input type="file" hidden accept='.csv' (change)="onFileChange($event)" #file_picker />
+      </button>
+      </div>
+    </div>
+  </div>
+  <div class="block w-full overflow-x-auto">
+    <div *ngIf="loading" class="py-6 flex justify-center align-middle">
+      <mat-spinner></mat-spinner>
+    </div>
+    <!-- Projects table -->
+    <table class="items-center w-full bg-transparent border-collapse" *ngIf="headings?.length > 0 && !loading">
+      <thead>
+        <tr>
+          <th *ngFor='let col of headings'
+            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+            [ngClass]="
+              color === 'light'
+                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                : 'bg-red-800 text-red-300 border-red-700'
+            "
+          >
+            {{col}}
+          </th>
+          <th
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <span class="ml-3 font-bold text-blueGray-500 uppercase">
+             Prediction
+            </span>
+          </th>
+          <th
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <span class="ml-3 font-bold text-blueGray-500 uppercase">
+              Probability
+            </span>
+          </th>
+      </thead>
+      <tbody>
+        
+        <tr *ngFor="let row of arrayLen;index as j">
+          <td *ngFor="let col of csvData;index as i"
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+              {{ csvData[j][i] }}
+            </span>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <span class="ml-3 font-bold {{setTextColor(csvData[j][21])}}">
+              {{ csvData[j][20] }}
+            </span>
+          </td>
+          <td
+            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+          >
+            <span class="ml-3 font-bold {{setTextColor(csvData[j][21])}}">
+              {{ csvData[j][21] | percent}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

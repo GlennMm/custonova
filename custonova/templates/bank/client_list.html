@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container' style="padding-top: 2em;padding-bottom: 2em;">
+        <div style="display: flex;justify-content: space-between">
+            <p class="text-heading">Bank Clients</p>
+            <a href="{% url 'bank:new_client' %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Add Client</a>
+        </div>
+        <div class="mt-10">
+            {% for client in clients %}
+            <div class="card" style="display: flex; justify-content: space-between;flex-direction: row;">
+                <div style="padding-left: 1em;">
+                    <p class="founder-text">{{client.first_name | upper}} {{client.last_name | upper}}</p>
+                    <p>{{ client.address }}</p>
+                </div>
+                <a href="{% url 'bank:client_details' pk=client.id %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

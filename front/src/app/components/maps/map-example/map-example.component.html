@@ -1,0 +1,112 @@
+<div class="flex flex-wrap">
+  <div class="w-full lg:w-8/12 px-4">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+      <div class="rounded-t bg-white mb-0 px-6 py-6">
+        <div class="text-center flex justify-between">
+          <h6 class="text-blueGray-700 text-xl font-bold">{{ file?.name || 'Select Training Dataset'}} <span
+              *ngIf="file != null">({{file?.size | filesize}})</span> </h6>
+          <button
+            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="button" *ngIf="file != null" (click)="uploadDataset()">
+            Upload
+          </button>
+          <button
+            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="button" *ngIf="file == null" (click)="file_picker.click()">
+            Select Training Dataset
+            <input type="file" hidden accept='.csv' (change)="selectFile($event)" #file_picker />
+          </button>
+        </div>
+      </div>
+      <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+        <div class="flex align-content-center justify-center py-8" *ngIf="loading">
+          <mat-spinner></mat-spinner>
+        </div>
+        <form *ngIf="!loading">
+
+          <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+          <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            Training Results
+          </h6>
+          <div class="flex flex-wrap">
+            <div class="w-full px-4">
+              <div class="flex justify-between">
+                <p>Accuracy Score</p>
+                <p>{{train_result['accuracy_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Precision Score</p>
+                <p>{{train_result['precision_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>F1 Score</p>
+                <p>{{train_result['f1_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Recall</p>
+                <p>{{train_result['recall_score'] | percent}}</p>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="w-full lg:w-4/12 px-4">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+      <div class="rounded-t bg-white mb-0 px-6 py-6">
+        <div class="text-center flex justify-between">
+          <h6 class="text-blueGray-700 text-xl font-bold">{{ test_file?.name || 'Select Test Dataset'}} <span
+              *ngIf="test_file != null">({{test_file?.size | filesize}})</span> </h6>
+          <button
+            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="button" *ngIf="test_file != null" (click)="uploadTestDataset()">
+            Upload
+          </button>
+          <button
+            class="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+            type="button" *ngIf="test_file == null" (click)="test_file_picker.click()">
+            Select Test Dataset
+            <input type="file" hidden accept='.csv' (change)="selectTestFile($event)" #test_file_picker />
+          </button>
+        </div>
+      </div>
+      <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+        <div class="flex align-content-center justify-center py-8" *ngIf="test_loading">
+          <mat-spinner></mat-spinner>
+        </div>
+        <form *ngIf="!test_loading">
+
+          <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+          <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            Test Results
+          </h6>
+          <div class="flex flex-wrap">
+            <div class="w-full px-4">
+              <div class="flex justify-between">
+                <p>Accuracy Score</p>
+                <p>{{test_result['accuracy_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Precision Score</p>
+                <p>{{test_result['precision_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>F1 Score</p>
+                <p>{{test_result['f1_score'] | percent}}</p>
+              </div>
+              <div class="flex justify-between">
+                <p>Recall</p>
+                <p>{{test_result['recall_score'] | percent}}</p>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container' style="padding-top: 2em;padding-bottom: 2em;">
+        <p class="text-heading">Client Delete Confirmation</p>
+        <div class="mt-10">
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div style="display: flex; justify-content: space-between">
+                    <button type="submit" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Save</button>
+                    <a type="button" href="{% url 'bank:client_details' pk=client.id %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

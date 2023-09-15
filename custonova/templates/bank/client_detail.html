@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container' style="padding-top: 2em;padding-bottom: 2em;">
+        <p class="text-heading">{{client.first_name | upper}} {{client.last_name | upper}}</p>
+        <div class="card" style="padding: 1.5em;">
+            <p class="text-heading">{{client}}</p>
+            <p>Date Of Birth: {{client.dob | date}}</p>
+            <p>Address: {{client.address }}</p>
+            <p>ID Number: {{client.id_no }}</p>
+            <p>Occupation: {{client.occupation }}</p>
+        </div>
+        
+        <div class="mt-10">
+            {% include '../include/line_graph.html' with client=client chart_info=chart_info x_label='Dates' y_label='Amount' title='Transaction History wrt to amount' legend_label='Amount' %}
+
+            <div style="margin: 2em 0">
+                <a class="btn genric-btn" href="{% url 'bank:check_fraud' pk=client.id %}">Check For Fraud Activities</a>
+            </div>
+
+            {% for trans in transactions %}
+            <div class="card" style="margin: .5em 0;display: flex; justify-content: space-between;flex-direction: row;">
+                <div style="padding-left: 1em;">
+                    <p class="founder-text">{{trans.nameOrig.owner}} ({{trans.nameOrig.account_no}}) did {{trans.type}} to {{trans.nameDest.owner}}'s account ({{trans.nameDest.account_no}})</p>
+                    <p>Amount: $ {{ trans.amount }}</p>
+                    <p style="font-size: smaller;">{{trans.timestamp | date}} at {{trans.timestamp | time}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="display: flex;justify-content: space-between;" class="justify-content-between">
+            <a href="{% url 'bank:client_edit' pk=client.id %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Edit</a>
+            <a href="{% url 'bank:client_delete' pk=client.id %}" class="btn genric-btn text-uppercase text-center" style="display: flex;align-items: center;">Delete</a>
+        </div>
+    </div>
+{% endblock %}
